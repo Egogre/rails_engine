@@ -7,7 +7,12 @@ class Api::V1::InvoicesController < ApplicationController
   end
 
   def show
-    respond_with Invoice.find(params[:id])
+    invoice = Invoice.find_by(id: params[:id])
+    if invoice
+      respond_with invoice
+    else
+      respond_with invoice, status: :not_found
+    end
   end
 
 end
