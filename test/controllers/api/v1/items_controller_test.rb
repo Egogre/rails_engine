@@ -13,8 +13,6 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
 
     get :index, format: :json
 
-    response_body = JSON.parse(response.body)
-
     assert_equal item_count, response_body.count
   end
 
