@@ -49,4 +49,27 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find invoice_item" do
+    invoice_item = InvoiceItem.create(item_id: 1,
+                                      invoice_id: 1,
+                                      quantity: 7,
+                                      unit_price: 3000)
+
+    get :find, id: invoice_item.id, format: :json
+
+    assert_response :success
+    assert_equal 1, response_body["item_id"]
+    assert_equal 1, response_body["invoice_id"]
+    assert_equal 7, response_body["quantity"]
+    assert_equal 3000, response_body["unit_price"]
+
+    get :find, first_name: "New", format: :json
+
+    assert_response :success
+    assert_equal 1, response_body["item_id"]
+    assert_equal 1, response_body["invoice_id"]
+    assert_equal 7, response_body["quantity"]
+    assert_equal 3000, response_body["unit_price"]
+  end
+
 end

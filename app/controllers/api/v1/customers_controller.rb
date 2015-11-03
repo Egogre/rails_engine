@@ -22,13 +22,7 @@ class Api::V1::CustomersController < Api::BaseController
     end
   end
 
-
-
   private
-
-  def customer_params
-    params.require(:customer).permit(:first_name, :last_name)
-  end
 
   def find_params
     params.permit(:id, :first_name, :last_name)
