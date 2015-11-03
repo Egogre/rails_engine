@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  references: 
+  references: 
+  status: MyString
+  created_at: 2015-11-02 20:50:16
+  updated_at: 2015-11-02 20:50:16
+
+two:
+  references: 
+  references: 
+  status: MyString
+  created_at: 2015-11-02 20:50:16
+  updated_at: 2015-11-02 20:50:16
