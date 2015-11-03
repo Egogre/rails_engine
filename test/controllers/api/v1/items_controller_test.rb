@@ -24,11 +24,11 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "item show gives correct name" do
+  test "item show gives correct data" do
     item = Item.create(name: "Test Item",
-                             description: "Useful",
-                             unit_price: 9999,
-                             merchant_id: 1)
+                       description: "Useful",
+                       unit_price: 9999,
+                       merchant_id: 1)
 
     get :show, format: :json, id: item.id
 
@@ -40,9 +40,9 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
 
   test "404 for non-existant item" do
     item = Item.create(name: "Test Item",
-                             description: "Useful",
-                             unit_price: 9999,
-                             merchant_id: 1)
+                       description: "Useful",
+                       unit_price: 9999,
+                       merchant_id: 1)
 
     get :show, format: :json, id: item.id + 1
 

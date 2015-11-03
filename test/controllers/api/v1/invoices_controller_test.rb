@@ -25,7 +25,7 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "invoice show gives correct name" do
+  test "invoice show gives correct data" do
     invoice = Invoice.create(customer_id: 1,
                              merchant_id: 1,
                              status: "shipped")

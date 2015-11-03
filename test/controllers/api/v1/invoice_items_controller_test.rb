@@ -24,7 +24,7 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "invoice_item show gives correct name" do
+  test "invoice_item show gives correct data" do
     invoice_item = InvoiceItem.create(item_id: 1,
                                       invoice_id: 1,
                                       quantity: 7,
