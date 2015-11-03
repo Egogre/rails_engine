@@ -13,4 +13,19 @@ class Api::V1::ItemsController < Api::BaseController
     end
   end
 
+  def find
+    item = Item.find_by(find_params)
+    if item
+      respond_with item
+    else
+      respond_with item, status: :not_found
+    end
+  end
+
+  private
+
+  def find_params
+    params.permit(:id, :name, :description, :merchant_id, :unit_price)
+  end
+
 end

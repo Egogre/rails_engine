@@ -49,4 +49,27 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find item" do
+    item = Item.create(name: "Test Item",
+                       description: "Useful",
+                       unit_price: 9999,
+                       merchant_id: 1)
+
+    get :find, id: item.id, format: :json
+
+    assert_response :success
+    assert_equal "Test Item", response_body["name"]
+    assert_equal "Useful", response_body["description"]
+    assert_equal 9999, response_body["unit_price"]
+    assert_equal 1, response_body["merchant_id"]
+
+    get :find, description: "Useful", format: :json
+
+    assert_response :success
+    assert_equal "Test Item", response_body["name"]
+    assert_equal "Useful", response_body["description"]
+    assert_equal 9999, response_body["unit_price"]
+    assert_equal 1, response_body["merchant_id"]
+  end
+
 end
