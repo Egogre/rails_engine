@@ -40,4 +40,18 @@ class Api::V1::MerchantsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find merchant" do
+    merchant = Merchant.create(name: "Test Merchant")
+
+    get :find, id: merchant.id, format: :json
+
+    assert_response :success
+    assert_equal "Test Merchant", response_body["name"]
+
+    get :find, name: "Test Merchant", format: :json
+
+    assert_response :success
+    assert_equal "Test Merchant", response_body["name"]
+  end
+
 end

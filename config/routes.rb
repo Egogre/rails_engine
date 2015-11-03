@@ -14,6 +14,7 @@ namespace :api do
     get 'items/find', to: 'items#find', defaults: {format: :json}
     resources :items, only: [:index, :show], defaults: { format: :json}
 
+    get 'merchants/find', to: 'merchants#find', defaults: {format: :json}
     resources :merchants, only: [:index, :show], defaults: { format: :json}
     resources :transactions, only: [:index, :show], defaults: { format: :json}
   end
