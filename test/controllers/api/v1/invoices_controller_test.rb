@@ -46,4 +46,25 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
 
     assert_response :not_found
   end
+
+  test "#find invoice" do
+    invoice = Invoice.create(customer_id: 1,
+                             merchant_id: 1,
+                             status: "shipped")
+
+    get :find, id: invoice.id, format: :json
+
+    assert_response :success
+    assert_equal 1, response_body["customer_id"]
+    assert_equal 1, response_body["merchant_id"]
+    assert_equal "shipped", response_body["status"]
+
+    get :find, status: "shipped", format: :json
+
+    assert_response :success
+    assert_equal 1, response_body["customer_id"]
+    assert_equal 1, response_body["merchant_id"]
+    assert_equal "shipped", response_body["status"]
+  end
+
 end

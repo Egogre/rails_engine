@@ -6,6 +6,7 @@ namespace :api do
     resources :customers, only: [:index, :show], defaults: { format: :json}
     get 'invoice_items/find', to: 'invoice_items#find', defaults: {format: :json}
     resources :invoice_items, only: [:index, :show], defaults: { format: :json}
+    get 'invoices/find', to: 'invoices#find', defaults: {format: :json}
     resources :invoices, only: [:index, :show], defaults: { format: :json}
     resources :items, only: [:index, :show], defaults: { format: :json}
     resources :merchants, only: [:index, :show], defaults: { format: :json}
