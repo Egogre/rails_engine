@@ -41,20 +41,20 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
-  test "#create customer" do
-    new_customer = { first_name: "New", last_name: "Person"}
+  test "#find customer" do
+    new_customer = Customer.create(first_name: "New", last_name: "Person")
 
-    post :create, format: :json, customer: new_customer
+    get :find, id: new_customer.id, format: :json
 
-    assert_response :created
+    assert_response :success
+    assert_equal "New", response_body["first_name"]
+    assert_equal "Person", response_body["last_name"]
+
+    get :find, first_name: "New", format: :json
+
+    assert_response :success
+    assert_equal "New", response_body["first_name"]
+    assert_equal "Person", response_body["last_name"]
   end
 
-  test "#update customer" do
-    customer = Customer.create(first_name: "Test", last_name: "User")
-    updated_params = {first_name: "Updated", last_name: "Person"}
-
-    put :update, format: :json, id: customer.id, customer: updated_params
-
-    assert_response :no_content
-  end
 end

@@ -13,21 +13,12 @@ class Api::V1::CustomersController < Api::BaseController
     end
   end
 
-  def create
-    customer = Customer.new(customer_params)
-    if customer.save
-      respond_with customer, status: :created, location: [:api, :v1, customer]
+  def find
+    customer = Customer.find_by(find_params)
+    if customer
+      respond_with customer
     else
-      respond_with errors: customer.errors, status: :not_acceptable
-    end
-  end
-
-  def update
-    customer = Customer.find(params[:id])
-    if customer.update(customer_params)
-      respond_with customer, location: [:api, :v1, customer]
-    else
-      respond_with errors: customer.errors, status: :not_acceptable
+      respond_with customer, status: :not_found
     end
   end
 
@@ -38,4 +29,9 @@ class Api::V1::CustomersController < Api::BaseController
   def customer_params
     params.require(:customer).permit(:first_name, :last_name)
   end
+
+  def find_params
+    params.permit(:id, :first_name, :last_name)
+  end
+
 end
