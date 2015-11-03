@@ -1,5 +1,4 @@
-class Api::V1::InvoiceItemsController < ApplicationController
-  respond_to :json
+class Api::V1::InvoiceItemsController < Api::BaseController
 
   def index
     respond_with InvoiceItem.all

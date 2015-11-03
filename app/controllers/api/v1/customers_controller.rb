@@ -1,5 +1,4 @@
-class Api::V1::CustomersController < ApplicationController
-  respond_to :json
+class Api::V1::CustomersController < Api::BaseController
 
   def index
     respond_with Customer.all
@@ -32,7 +31,7 @@ class Api::V1::CustomersController < ApplicationController
     end
   end
 
-  
+
 
   private
 
