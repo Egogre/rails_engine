@@ -54,4 +54,27 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
     assert_equal "User", response_body["last_name"]
   end
 
+  test "#find_all customers" do
+    skip
+    Customer.create(first_name: "John", last_name: "Doe")
+    Customer.create(first_name: "John", last_name: "Notdoe")
+
+    get :find_all, first_name: "Test", format: :json
+
+    assert_response :success
+    assert_equal 2, response_body.count
+    assert_equal "Doe", response_body[0].last_name
+  end
+
+  test "#random customer" do
+    Customer.create(first_name: "John", last_name: "Doe")
+    Customer.create(first_name: "John", last_name: "Notdoe")
+    Customer.create(first_name: "Notjohn", last_name: "Notdoe")
+
+    get :random, format: :json
+    assert_response :success
+    
+    assert_includes ["John", "Notjohn"], response_body["first_name"]
+  end
+
 end

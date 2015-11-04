@@ -22,6 +22,10 @@ class Api::V1::CustomersController < Api::BaseController
     end
   end
 
+  def random
+    respond_with Customer.random
+  end
+
   private
 
   def find_params
