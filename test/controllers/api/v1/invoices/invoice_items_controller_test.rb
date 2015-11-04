@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
+class Api::V1::Invoices::InvoiceItemsControllerTest < ActionController::TestCase
 
-  test "#index returns invoice items" do
+  test "#index returns invoice invoice_items" do
     invoice = nil
     invoice_item1 = nil
     invoice_item2 = nil
@@ -39,31 +39,31 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
                                          quantity: 13,
                                          unit_price: 1234)
     end
-    expected_items = [
+    expected_invoice_items = [
       {
-        "id" => item1.id,
-        "name" => "Test Item",
-        "description" => "Useful",
+        "id" => invoice_item1.id,
+        "item_id" => item1.id,
+        "invoice_id" => invoice.id,
+        "quantity" => 7,
         "unit_price" => 9999,
-        "merchant_id" => 1,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       },
       {
-        "id" => item2.id,
-        "name" => "Another Test Item",
-        "description" => "More Useful",
+        "id" => invoice_item2.id,
+        "item_id" => item2.id,
+        "invoice_id" => invoice.id,
+        "quantity" => 2,
         "unit_price" => 7777,
-        "merchant_id" => 1,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       },
       {
-        "id" => item3.id,
-        "name" => "Last Test Item",
-        "description" => "Most Useful",
+        "id" => invoice_item3.id,
+        "item_id" => item3.id,
+        "invoice_id" => invoice.id,
+        "quantity" => 13,
         "unit_price" => 1234,
-        "merchant_id" => 4,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       }
@@ -72,7 +72,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
     get :index, invoice_id: invoice.id, format: :json
 
     assert_response :success
-    assert_equal expected_items, response_body
+    assert_equal expected_invoice_items, response_body
   end
 
 end
