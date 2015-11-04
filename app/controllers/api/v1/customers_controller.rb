@@ -22,6 +22,15 @@ class Api::V1::CustomersController < Api::BaseController
     end
   end
 
+  def find_all
+    customers = Customer.where(find_params)
+    if !customers.empty?
+      respond_with customers
+    else
+      respond_with customers, status: :not_found
+    end
+  end
+
   def random
     respond_with Customer.random
   end

@@ -59,15 +59,23 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
   end
 
   test "#find_all customers" do
-    skip
     Customer.create(first_name: "John", last_name: "Doe")
     Customer.create(first_name: "John", last_name: "Notdoe")
 
-    get :find_all, first_name: "Test", format: :json
+    get :find_all, first_name: "John", format: :json
 
     assert_response :success
     assert_equal 2, response_body.count
-    assert_equal "Doe", response_body[0].last_name
+    assert_equal "Doe", response_body[0]["last_name"]
+  end
+
+  test "#find_all with no customer matches" do
+    Customer.create(first_name: "John", last_name: "Doe")
+    Customer.create(first_name: "John", last_name: "Notdoe")
+
+    get :find_all, first_name: "BILLYJOEBOBRAY", format: :json
+
+    assert_response :not_found
   end
 
   test "#random customer" do
