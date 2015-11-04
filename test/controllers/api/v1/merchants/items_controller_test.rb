@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Api::V1::Merchants::ItemsControllerTest < ActionController::TestCase
 
-  test "#show returns merchant item" do
+  test "#show returns merchant items" do
     merchant = nil
     item1 = nil
     item2 = nil
