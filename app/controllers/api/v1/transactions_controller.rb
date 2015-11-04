@@ -22,6 +22,19 @@ class Api::V1::TransactionsController < Api::BaseController
     end
   end
 
+  def find_all
+    transactions = Transaction.where(find_params)
+    if !transactions.empty?
+      respond_with transactions
+    else
+      respond_with transactions, status: :not_found
+    end
+  end
+
+  def random
+    respond_with Transaction.random
+  end
+
   private
 
   def find_params

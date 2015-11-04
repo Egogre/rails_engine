@@ -66,4 +66,52 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find_all invoices" do
+    Invoice.create(customer_id: 1,
+                   merchant_id: 7,
+                   status: "shipped")
+    Invoice.create(customer_id: 1,
+                   merchant_id: 34,
+                   status: "shipped")
+
+    get :find_all, customer_id: 1, format: :json
+
+    assert_response :success
+    assert_equal 2, response_body.count
+    assert_equal 34, response_body[1]["merchant_id"]
+  end
+
+  test "#find_all with no invoice matches" do
+    Invoice.create(customer_id: 1,
+                   merchant_id: 7,
+                   status: "shipped")
+    Invoice.create(customer_id: 1,
+                   merchant_id: 34,
+                   status: "shipped")
+
+    get :find_all, customer_id: 11011001, format: :json
+
+    assert_response :not_found
+  end
+
+  test "#random invoice" do
+    Invoice.create(customer_id: 3,
+                   merchant_id: 31,
+                   status: "shipped")
+    Invoice.create(customer_id: 99,
+                   merchant_id: 34,
+                   status: "shipped")
+    Invoice.create(customer_id: 1,
+                   merchant_id: 7,
+                   status: "shipped")
+    Invoice.create(customer_id: 1,
+                   merchant_id: 34,
+                   status: "shipped")
+
+    get :random, format: :json
+    assert_response :success
+
+    assert_includes [1, 3, 99], response_body["customer_id"]
+  end
+
 end

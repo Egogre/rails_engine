@@ -56,4 +56,36 @@ class Api::V1::MerchantsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find_all customers" do
+    merchant1 = Merchant.create(name: "Test Merchant")
+    merchant2 = Merchant.create(name: "Test Merchant")
+
+    get :find_all, name: "Test Merchant", format: :json
+
+    assert_response :success
+    assert_equal 2, response_body.count
+    assert_equal merchant1.id, response_body[0]["id"]
+  end
+
+  test "#find_all with no customer matches" do
+    Merchant.create(name: "Test Merchant")
+    Merchant.create(name: "Test Merchant")
+
+    get :find_all, name: "Testz Merchantz", format: :json
+
+    assert_response :not_found
+  end
+
+  test "#random customer" do
+    Merchant.create(name: "Gandalf")
+    Merchant.create(name: "Bilbo")
+    Merchant.create(name: "Elrond")
+    Merchant.create(name: "Gollum")
+
+    get :random, format: :json
+    assert_response :success
+
+    assert_includes ["Gandalf", "Bilbo", "Elrond", "Gollum"], response_body["name"]
+  end
+
 end

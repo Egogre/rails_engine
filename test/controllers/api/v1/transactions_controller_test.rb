@@ -62,4 +62,60 @@ class Api::V1::TransactionsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find_all transactions" do
+    Transaction.create(invoice_id: 1,
+                       credit_card_number: "1234123412341234",
+                       credit_card_expiration_date: "NEVER!",
+                       result: "Success")
+    Transaction.create(invoice_id: 1,
+                       credit_card_number: "4321432143214321",
+                       credit_card_expiration_date: "SOON!",
+                       result: "Success")
+
+    get :find_all, invoice_id: 1, format: :json
+
+    assert_response :success
+    assert_equal 2, response_body.count
+    assert_equal "NEVER!", response_body[0]["credit_card_expiration_date"]
+  end
+
+  test "#find_all with no transaction matches" do
+    Transaction.create(invoice_id: 1,
+                       credit_card_number: "1234123412341234",
+                       credit_card_expiration_date: "NEVER!",
+                       result: "Success")
+    Transaction.create(invoice_id: 1,
+                       credit_card_number: "4321432143214321",
+                       credit_card_expiration_date: "SOON!",
+                       result: "Success")
+
+    get :find_all, invoice_id: 55544, format: :json
+
+    assert_response :not_found
+  end
+
+  test "#random transaction" do
+    Transaction.create(invoice_id: 1,
+                       credit_card_number: "1234123412341234",
+                       credit_card_expiration_date: "NEVER!",
+                       result: "Success")
+    Transaction.create(invoice_id: 2,
+                       credit_card_number: "4321432143214321",
+                       credit_card_expiration_date: "SOON!",
+                       result: "Success")
+    Transaction.create(invoice_id: 4,
+                       credit_card_number: "3456345634563456",
+                       credit_card_expiration_date: "NOW!",
+                       result: "Success")
+    Transaction.create(invoice_id: 5,
+                       credit_card_number: "6543654365436543",
+                       credit_card_expiration_date: "YESTERDAY!",
+                       result: "Success")
+
+    get :random, format: :json
+
+    assert_response :success
+    assert_includes ["NEVER!", "SOON!", "NOW!", "YESTERDAY!"], response_body["credit_card_expiration_date"]
+  end
+
 end

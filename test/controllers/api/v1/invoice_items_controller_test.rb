@@ -68,4 +68,60 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
+  test "#find_all invoice_items" do
+    InvoiceItem.create(item_id: 1,
+                       invoice_id: 34,
+                       quantity: 7,
+                       unit_price: 3000)
+    InvoiceItem.create(item_id: 5,
+                       invoice_id: 34,
+                       quantity: 1,
+                       unit_price: 9999)
+
+    get :find_all, invoice_id: 34, format: :json
+
+    assert_response :success
+    assert_equal 2, response_body.count
+    assert_equal 3000, response_body[0]["unit_price"]
+  end
+
+  test "#find_all with no customer matches" do
+    InvoiceItem.create(item_id: 1,
+                       invoice_id: 34,
+                       quantity: 7,
+                       unit_price: 3000)
+    InvoiceItem.create(item_id: 5,
+                       invoice_id: 34,
+                       quantity: 1,
+                       unit_price: 9999)
+
+    get :find_all, item_id: 919199, format: :json
+
+    assert_response :not_found
+  end
+
+  test "#random customer" do
+    InvoiceItem.create(item_id: 1,
+                       invoice_id: 34,
+                       quantity: 7,
+                       unit_price: 3000)
+    InvoiceItem.create(item_id: 5,
+                       invoice_id: 34,
+                       quantity: 1,
+                       unit_price: 9999)
+    InvoiceItem.create(item_id: 71,
+                       invoice_id: 47,
+                       quantity: 12,
+                       unit_price: 3119)
+    InvoiceItem.create(item_id: 1001,
+                       invoice_id: 991,
+                       quantity: 3,
+                       unit_price: 107)
+
+    get :random, format: :json
+    assert_response :success
+
+    assert_includes [7, 12, 1, 3], response_body["quantity"]
+  end
+
 end

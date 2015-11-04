@@ -1,9 +1,5 @@
 class Customer < ActiveRecord::Base
+  extend ApplicationModel
   has_many :transactions, through: :invoices
   has_many :invoices
-
-
-  def self.random
-    order("random()").first
-  end
 end

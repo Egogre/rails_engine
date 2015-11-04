@@ -24,6 +24,19 @@ class Api::V1::InvoicesController < Api::BaseController
     end
   end
 
+  def find_all
+    invoices = Invoice.where(find_params)
+    if !invoices.empty?
+      respond_with invoices
+    else
+      respond_with invoices, status: :not_found
+    end
+  end
+
+  def random
+    respond_with Invoice.random
+  end
+
   private
 
   def find_params

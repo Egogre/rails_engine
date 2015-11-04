@@ -22,6 +22,19 @@ class Api::V1::MerchantsController < Api::BaseController
     end
   end
 
+  def find_all
+    merchants = Merchant.where(find_params)
+    if !merchants.empty?
+      respond_with merchants
+    else
+      respond_with merchants, status: :not_found
+    end
+  end
+
+  def random
+    respond_with Merchant.random
+  end
+
   private
 
   def find_params
