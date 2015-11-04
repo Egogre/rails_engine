@@ -2,6 +2,13 @@ require 'test_helper'
 
 class Api::V1::ItemsControllerTest < ActionController::TestCase
 
+  def item
+    Item.create(name: "Test Item",
+                description: "Useful",
+                unit_price: 9999,
+                merchant_id: 1)
+  end
+
   test "item index json api" do
     get :index, format: :json
 
@@ -17,19 +24,12 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
   end
 
   test "item show json api" do
-    item = Item.create
-
     get :show, format: :json, id: item.id
 
     assert_response :success
   end
 
   test "item show gives correct data" do
-    item = Item.create(name: "Test Item",
-                       description: "Useful",
-                       unit_price: 9999,
-                       merchant_id: 1)
-
     get :show, format: :json, id: item.id
 
     assert_equal "Test Item", response_body["name"]
@@ -39,22 +39,12 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
   end
 
   test "404 for non-existant item" do
-    item = Item.create(name: "Test Item",
-                       description: "Useful",
-                       unit_price: 9999,
-                       merchant_id: 1)
-
     get :show, format: :json, id: item.id + 1
 
     assert_response :not_found
   end
 
   test "#find item" do
-    item = Item.create(name: "Test Item",
-                       description: "Useful",
-                       unit_price: 9999,
-                       merchant_id: 1)
-
     get :find, id: item.id, format: :json
 
     assert_response :success

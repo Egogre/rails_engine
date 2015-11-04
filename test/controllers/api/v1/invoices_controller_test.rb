@@ -1,6 +1,13 @@
 require 'test_helper'
 
 class Api::V1::InvoicesControllerTest < ActionController::TestCase
+
+  def invoice
+    Invoice.create(customer_id: 1,
+                   merchant_id: 1,
+                   status: "shipped")
+  end
+
   test "invoice index json api" do
     get :index, format: :json
 
@@ -18,18 +25,12 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
   end
 
   test "invoice show json api" do
-    invoice = Invoice.create
-
     get :show, format: :json, id: invoice.id
 
     assert_response :success
   end
 
   test "invoice show gives correct data" do
-    invoice = Invoice.create(customer_id: 1,
-                             merchant_id: 1,
-                             status: "shipped")
-
     get :show, format: :json, id: invoice.id
 
     assert_equal 1, response_body["customer_id"]
@@ -38,20 +39,12 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
   end
 
   test "404 for non-existant invoice" do
-    invoice = Invoice.create(customer_id: 1,
-                             merchant_id: 1,
-                             status: "shipped")
-
     get :show, format: :json, id: invoice.id + 1
 
     assert_response :not_found
   end
 
   test "#find invoice" do
-    invoice = Invoice.create(customer_id: 1,
-                             merchant_id: 1,
-                             status: "shipped")
-
     get :find, id: invoice.id, format: :json
 
     assert_response :success

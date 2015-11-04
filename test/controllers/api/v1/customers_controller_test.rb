@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class Api::V1::CustomersControllerTest < ActionController::TestCase
+
+  def customer
+    Customer.create(first_name: "Test", last_name: "User")
+  end
+
   test "customer index json api" do
     get :index, format: :json
 
@@ -17,16 +22,12 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
   end
 
   test "customer show json api" do
-    customer = Customer.create
-
     get :show, format: :json, id: customer.id
 
     assert_response :success
   end
 
   test "customer show gives correct name" do
-    customer = Customer.create(first_name: "Test", last_name: "User")
-
     get :show, format: :json, id: customer.id
 
     assert_equal "Test", response_body["first_name"]
@@ -42,19 +43,15 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
   end
 
   test "#find customer" do
-    new_customer = Customer.create(first_name: "New", last_name: "Person")
-
-    get :find, id: new_customer.id, format: :json
+    get :find, id: customer.id, format: :json
 
     assert_response :success
-    assert_equal "New", response_body["first_name"]
-    assert_equal "Person", response_body["last_name"]
+    assert_equal "Test", response_body["first_name"]
 
-    get :find, first_name: "New", format: :json
+    get :find, first_name: "Test", format: :json
 
     assert_response :success
-    assert_equal "New", response_body["first_name"]
-    assert_equal "Person", response_body["last_name"]
+    assert_equal "User", response_body["last_name"]
   end
 
 end
