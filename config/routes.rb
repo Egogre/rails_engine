@@ -12,8 +12,15 @@ namespace :api do
       resources :transactions, only: [:index], module: :customers
     end
 
-    get 'invoice_items/find', to: 'invoice_items#find', defaults: {format: :json}
-    resources :invoice_items, only: [:index, :show], defaults: { format: :json}
+    resources :invoice_items, only: [:index, :show], defaults: { format: :json} do
+      collection do
+        get 'random'
+        get 'find'
+        get 'find_all'
+      end
+      resource :invoice, only: [:show], module: :invoice_items
+      resources :item, only: [:index], module: :invoice_items
+    end
 
     get 'invoices/find', to: 'invoices#find', defaults: {format: :json}
     resources :invoices, only: [:index, :show], defaults: { format: :json}
