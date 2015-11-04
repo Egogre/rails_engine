@@ -19,7 +19,7 @@ namespace :api do
         get 'find_all'
       end
       resource :invoice, only: [:show], module: :invoice_items
-      resources :item, only: [:index], module: :invoice_items
+      resource :item, only: [:show], module: :invoice_items
     end
 
     get 'invoices/find', to: 'invoices#find', defaults: {format: :json}
