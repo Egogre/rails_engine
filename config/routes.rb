@@ -55,8 +55,14 @@ namespace :api do
       resources :invoices, only: [:index], module: :merchants
     end
 
-    get 'transactions/find', to: 'transactions#find', defaults: {format: :json}
-    resources :transactions, only: [:index, :show], defaults: { format: :json}
+    resources :transactions, only: [:index, :show], defaults: { format: :json} do
+      collection do
+        get 'random'
+        get 'find'
+        get 'find_all'
+      end
+      resource :invoice, only: [:show], module: :transactions
+    end
   end
 end
 
