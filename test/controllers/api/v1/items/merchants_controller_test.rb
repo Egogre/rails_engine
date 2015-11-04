@@ -1,17 +1,18 @@
 require 'test_helper'
 
-class Api::V1::Invoices::MerchantsControllerTest < ActionController::TestCase
+class Api::V1::Items::MerchantsControllerTest < ActionController::TestCase
 
-  test "#show returns invoice merchant" do
+  test "#show returns item merchant" do
     merchant = nil
-    invoice = nil
+    item = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
       merchant = Merchant.create(name: "John and Sons")
-      invoice = Invoice.create(customer_id: 1,
-                               merchant_id: merchant.id,
-                               status: "shipped")
+      item = Item.create(name: "Test Item",
+                         description: "Useful",
+                         unit_price: 9999,
+                         merchant_id: merchant.id)
     end
-    
+
     expected_merchant = {
       "id" => merchant.id,
       "name" => "John and Sons",
@@ -19,7 +20,7 @@ class Api::V1::Invoices::MerchantsControllerTest < ActionController::TestCase
       "updated_at" => "2004-11-24T01:04:44.000Z"
     }
 
-    get :show, invoice_id: invoice.id, format: :json
+    get :show, item_id: item.id, format: :json
 
     assert_response :success
     assert_equal expected_merchant, response_body
