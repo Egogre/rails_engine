@@ -62,4 +62,10 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_equal 3000, response_body["unit_price"]
   end
 
+  test "#find non-existant invoice_item" do
+    get :find, id: invoice_item.id + 1, format: :json
+
+    assert_response :not_found
+  end
+
 end

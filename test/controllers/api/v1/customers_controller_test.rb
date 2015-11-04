@@ -35,8 +35,6 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
   end
 
   test "404 for non-existant customer" do
-    customer = Customer.create(first_name: "Test", last_name: "User")
-
     get :show, format: :json, id: customer.id + 1
 
     assert_response :not_found
@@ -52,6 +50,12 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal "User", response_body["last_name"]
+  end
+
+  test "#find non-existant customer" do
+    get :find, id: customer.id + 1, format: :json
+
+    assert_response :not_found
   end
 
   test "#find_all customers" do
@@ -73,7 +77,7 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
 
     get :random, format: :json
     assert_response :success
-    
+
     assert_includes ["John", "Notjohn"], response_body["first_name"]
   end
 

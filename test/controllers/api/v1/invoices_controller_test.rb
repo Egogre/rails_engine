@@ -60,4 +60,10 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
     assert_equal "shipped", response_body["status"]
   end
 
+  test "#find non-existant invoice" do
+    get :find, id: invoice.id + 1, format: :json
+
+    assert_response :not_found
+  end
+
 end

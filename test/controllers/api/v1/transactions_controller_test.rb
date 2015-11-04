@@ -56,4 +56,10 @@ class Api::V1::TransactionsControllerTest < ActionController::TestCase
     assert_equal "NEVER!", response_body["credit_card_expiration_date"]
   end
 
+  test "#find non-existant transaction" do
+    get :find, id: transaction.id + 1, format: :json
+
+    assert_response :not_found
+  end
+
 end

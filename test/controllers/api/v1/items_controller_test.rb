@@ -62,4 +62,10 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_equal 1, response_body["merchant_id"]
   end
 
+  test "#find non-existant item" do
+    get :find, id: item.id + 1, format: :json
+
+    assert_response :not_found
+  end
+
 end
