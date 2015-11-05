@@ -35,7 +35,7 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_equal 1, response_body["item_id"]
     assert_equal 1, response_body["invoice_id"]
     assert_equal 7, response_body["quantity"]
-    assert_equal 3000, response_body["unit_price"]
+    assert_equal "30.00", response_body["unit_price"]
   end
 
   test "404 for non-existant invoice_item" do
@@ -51,7 +51,7 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_equal 1, response_body["item_id"]
     assert_equal 1, response_body["invoice_id"]
     assert_equal 7, response_body["quantity"]
-    assert_equal 3000, response_body["unit_price"]
+    assert_equal "30.00", response_body["unit_price"]
 
     get :find, invoice_id: 1, format: :json
 
@@ -59,7 +59,7 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_equal 1, response_body["item_id"]
     assert_equal 1, response_body["invoice_id"]
     assert_equal 7, response_body["quantity"]
-    assert_equal 3000, response_body["unit_price"]
+    assert_equal "30.00", response_body["unit_price"]
   end
 
   test "#find non-existant invoice_item" do
@@ -82,7 +82,7 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_equal 2, response_body.count
-    assert_equal 3000, response_body[0]["unit_price"]
+    assert_equal "30.00", response_body[0]["unit_price"]
   end
 
   test "#find_all with no customer matches" do

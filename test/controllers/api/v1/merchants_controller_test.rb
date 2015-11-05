@@ -77,15 +77,17 @@ class Api::V1::MerchantsControllerTest < ActionController::TestCase
   end
 
   test "#random customer" do
-    Merchant.create(name: "Gandalf")
-    Merchant.create(name: "Bilbo")
-    Merchant.create(name: "Elrond")
-    Merchant.create(name: "Gollum")
+    create_merchants!
 
     get :random, format: :json
     assert_response :success
 
     assert_includes ["Gandalf", "Bilbo", "Elrond", "Gollum"], response_body["name"]
+  end
+
+  test "#most_revenue returns x top revenue merchants" do
+    create_merchants!
+
   end
 
 end

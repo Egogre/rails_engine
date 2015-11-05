@@ -44,7 +44,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
         "id" => item1.id,
         "name" => "Test Item",
         "description" => "Useful",
-        "unit_price" => 9999,
+        "unit_price" => "99.99",
         "merchant_id" => 1,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
@@ -53,7 +53,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
         "id" => item2.id,
         "name" => "Another Test Item",
         "description" => "More Useful",
-        "unit_price" => 7777,
+        "unit_price" => "77.77",
         "merchant_id" => 1,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
@@ -62,7 +62,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
         "id" => item3.id,
         "name" => "Last Test Item",
         "description" => "Most Useful",
-        "unit_price" => 1234,
+        "unit_price" => "12.34",
         "merchant_id" => 4,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"

@@ -45,7 +45,7 @@ class Api::V1::Invoices::InvoiceItemsControllerTest < ActionController::TestCase
         "item_id" => item1.id,
         "invoice_id" => invoice.id,
         "quantity" => 7,
-        "unit_price" => 9999,
+        "unit_price" => "99.99",
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       },
@@ -54,7 +54,7 @@ class Api::V1::Invoices::InvoiceItemsControllerTest < ActionController::TestCase
         "item_id" => item2.id,
         "invoice_id" => invoice.id,
         "quantity" => 2,
-        "unit_price" => 7777,
+        "unit_price" => "77.77",
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       },
@@ -63,7 +63,7 @@ class Api::V1::Invoices::InvoiceItemsControllerTest < ActionController::TestCase
         "item_id" => item3.id,
         "invoice_id" => invoice.id,
         "quantity" => 13,
-        "unit_price" => 1234,
+        "unit_price" => "12.34",
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       }

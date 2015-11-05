@@ -19,7 +19,7 @@ class Api::V1::InvoiceItems::ItemsControllerTest < ActionController::TestCase
       "id" => item.id,
       "name" => "Test Item",
       "description" => "Useful",
-      "unit_price" => 9999,
+      "unit_price" => "99.99",
       "merchant_id" => 1,
       "created_at" => "2004-11-24T01:04:44.000Z",
       "updated_at" => "2004-11-24T01:04:44.000Z"

@@ -12,5 +12,12 @@ class ActiveSupport::TestCase
     JSON.parse(response.body)
   end
 
+  def create_merchants!
+    Merchant.create(name: "Gandalf")
+    Merchant.create(name: "Bilbo")
+    Merchant.create(name: "Elrond")
+    Merchant.create(name: "Gollum")
+  end
+
   # Add more helper methods to be used by all tests here...
 end

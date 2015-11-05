@@ -34,7 +34,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
 
     assert_equal "Test Item", response_body["name"]
     assert_equal "Useful", response_body["description"]
-    assert_equal 9999, response_body["unit_price"]
+    assert_equal "99.99", response_body["unit_price"]
     assert_equal 1, response_body["merchant_id"]
   end
 
@@ -50,7 +50,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal "Test Item", response_body["name"]
     assert_equal "Useful", response_body["description"]
-    assert_equal 9999, response_body["unit_price"]
+    assert_equal "99.99", response_body["unit_price"]
     assert_equal 1, response_body["merchant_id"]
 
     get :find, description: "Useful", format: :json
@@ -58,7 +58,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal "Test Item", response_body["name"]
     assert_equal "Useful", response_body["description"]
-    assert_equal 9999, response_body["unit_price"]
+    assert_equal "99.99", response_body["unit_price"]
     assert_equal 1, response_body["merchant_id"]
   end
 
@@ -78,7 +78,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
                 unit_price: 9999,
                 merchant_id: 1)
 
-    get :find_all, unit_price: 9999, format: :json
+    get :find_all, unit_price: "99.99", format: :json
 
     assert_response :success
     assert_equal 2, response_body.count
@@ -121,7 +121,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     get :random, format: :json
     assert_response :success
 
-    assert_includes [1234, 4321, 3456, 6543], response_body["unit_price"]
+    assert_includes ["12.34", "43.21", "34.56", "65.43"], response_body["unit_price"]
   end
 
 end

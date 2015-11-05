@@ -14,7 +14,7 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2015-11-04T15:49:09-07:00">2015-11-04T15:49:09-07:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2015-11-04T17:26:27-07:00">2015-11-04T17:26:27-07:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,15 +25,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.43
+         1.62
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>36</b> files in total.
-    <b>237</b> relevant lines. 
-    <span class="green"><b>237</b> lines covered</span> and
+    <b>243</b> relevant lines. 
+    <span class="green"><b>243</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -373,21 +373,21 @@
       <tr>
         <td class="strong"><a href="#77c553bfdde26a2a702e3b939d8f701936be8522" class="src_link" title="app/models/invoice_item.rb">app/models/invoice_item.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>5</td>
-        <td>4</td>
-        <td>4</td>
+        <td>11</td>
+        <td>7</td>
+        <td>7</td>
         <td>0</td>
-        <td>1.0</td>
+        <td>4.3</td>
       </tr>
       
       <tr>
         <td class="strong"><a href="#4bff151fcfd8466309503eb83d64fd0219ba5c13" class="src_link" title="app/models/item.rb">app/models/item.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>6</td>
-        <td>5</td>
-        <td>5</td>
+        <td>12</td>
+        <td>8</td>
+        <td>8</td>
         <td>0</td>
-        <td>1.0</td>
+        <td>4.0</td>
       </tr>
       
       <tr>
@@ -680,15 +680,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.16
+         2.41
        </span>
     </span> hits/line)
   </h2>
   <a name="Models"></a>
   <div>
     <b>7</b> files in total.
-    <b>31</b> relevant lines. 
-    <span class="green"><b>31</b> lines covered</span> and
+    <b>37</b> relevant lines. 
+    <span class="green"><b>37</b> lines covered</span> and
     <span class="red"><b>0</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -738,21 +738,21 @@
       <tr>
         <td class="strong"><a href="#77c553bfdde26a2a702e3b939d8f701936be8522" class="src_link" title="app/models/invoice_item.rb">app/models/invoice_item.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>5</td>
-        <td>4</td>
-        <td>4</td>
+        <td>11</td>
+        <td>7</td>
+        <td>7</td>
         <td>0</td>
-        <td>1.0</td>
+        <td>4.3</td>
       </tr>
       
       <tr>
         <td class="strong"><a href="#4bff151fcfd8466309503eb83d64fd0219ba5c13" class="src_link" title="app/models/item.rb">app/models/item.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>6</td>
-        <td>5</td>
-        <td>5</td>
+        <td>12</td>
+        <td>8</td>
+        <td>8</td>
         <td>0</td>
-        <td>1.0</td>
+        <td>4.0</td>
       </tr>
       
       <tr>
@@ -4102,8 +4102,8 @@
     <h3>app/models/invoice_item.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>4</b> relevant lines. 
-      <span class="green"><b>4</b> lines covered</span> and
+      <b>7</b> relevant lines. 
+      <span class="green"><b>7</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -4138,6 +4138,42 @@
         <li class="never" data-hits="" data-linenumber="5">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="6">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  before_save :unit_price_to_dollars</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="8">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def unit_price_to_dollars</code>
+        </li>
+      
+        <li class="covered" data-hits="24" data-linenumber="9">
+          <span class="hits">24</span>
+          
+          <code class="ruby">    self.unit_price = &#39;%.2f&#39; % (self.unit_price.to_i / 100.0)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="10">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="11">
+          
+          
           <code class="ruby">end</code>
         </li>
       
@@ -4150,8 +4186,8 @@
     <h3>app/models/item.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>5</b> relevant lines. 
-      <span class="green"><b>5</b> lines covered</span> and
+      <b>8</b> relevant lines. 
+      <span class="green"><b>8</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -4190,6 +4226,42 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="6">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="7">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  before_save :unit_price_to_dollars</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="8">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="9">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def unit_price_to_dollars</code>
+        </li>
+      
+        <li class="covered" data-hits="25" data-linenumber="10">
+          <span class="hits">25</span>
+          
+          <code class="ruby">    self.unit_price = &#39;%.2f&#39; % (self.unit_price.to_i / 100.0)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="11">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="12">
           
           
           <code class="ruby">end</code>
