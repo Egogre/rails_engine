@@ -78,7 +78,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
                 unit_price: 9999,
                 merchant_id: 1)
 
-    get :find_all, unit_price: "99.99", format: :json
+    get :find_all, unit_price: "9999", format: :json
 
     assert_response :success
     assert_equal 2, response_body.count

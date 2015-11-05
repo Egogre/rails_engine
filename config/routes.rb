@@ -50,6 +50,9 @@ namespace :api do
         get 'random'
         get 'find'
         get 'find_all'
+        get 'most_revenue'
+        get 'most_revenue'
+        get 'revenue'
       end
       resources :items, only: [:index], module: :merchants
       resources :invoices, only: [:index], module: :merchants

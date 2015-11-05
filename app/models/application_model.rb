@@ -1,7 +1,7 @@
 module ApplicationModel
 
     def random
-      order("random()").first
+      order("RANDOM()").first
     end
 
 end
