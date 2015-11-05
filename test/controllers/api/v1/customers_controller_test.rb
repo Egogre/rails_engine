@@ -2,6 +2,10 @@ require 'test_helper'
 
 class Api::V1::CustomersControllerTest < ActionController::TestCase
 
+  def setup
+    create_sample_data!
+  end
+
   def customer
     Customer.create(first_name: "Test", last_name: "User")
   end
@@ -86,7 +90,10 @@ class Api::V1::CustomersControllerTest < ActionController::TestCase
     get :random, format: :json
     assert_response :success
 
-    assert_includes ["John", "Notjohn"], response_body["first_name"]
+    assert_includes ["John", "Notjohn", "Frodo",
+                     "Aaragorn", "Legolas", "Gimli",
+                     "Pippin", "Merryweather", "Boromir",
+                     "Samwise"], response_body["first_name"]
   end
 
 end

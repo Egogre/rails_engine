@@ -2,10 +2,6 @@ require 'test_helper'
 
 class Api::V1::ItemsControllerTest < ActionController::TestCase
 
-  def setup
-    create_sample_data!
-  end
-
   def item
     Item.create(name: "Test Item",
                 description: "Useful",
@@ -39,7 +35,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_equal "Test Item", response_body["name"]
     assert_equal "Useful", response_body["description"]
     assert_equal "99.99", response_body["unit_price"]
-    assert_equal 1, response_body["merchant_id"]
+    assert_equal @m1.id, response_body["merchant_id"]
   end
 
   test "404 for non-existant item" do
@@ -55,7 +51,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_equal "Test Item", response_body["name"]
     assert_equal "Useful", response_body["description"]
     assert_equal "99.99", response_body["unit_price"]
-    assert_equal 1, response_body["merchant_id"]
+    assert_equal @m1.id, response_body["merchant_id"]
 
     get :find, description: "Useful", format: :json
 
@@ -63,7 +59,7 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     assert_equal "Test Item", response_body["name"]
     assert_equal "Useful", response_body["description"]
     assert_equal "99.99", response_body["unit_price"]
-    assert_equal 1, response_body["merchant_id"]
+    assert_equal @m1.id, response_body["merchant_id"]
   end
 
   test "#find non-existant item" do
@@ -125,7 +121,9 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     get :random, format: :json
     assert_response :success
 
-    assert_includes ["12.34", "43.21", "34.56", "65.43"], response_body["unit_price"]
+    assert_includes ["12.34", "43.21", "34.56", "65.43",
+                     "0.99", "999.99", "10.99", "5.30",
+                     "0.01", "10.00", "0.50", "30.00"], response_body["unit_price"]
   end
 
 end

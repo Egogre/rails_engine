@@ -15,9 +15,9 @@ class Api::V1::Transactions::InvoicesControllerTest < ActionController::TestCase
                                        result: "Success")
     end
     expected_invoice = {
-      "id" => invoice.id,
+      "id" => @inv1.id,
       "customer_id" => @c1.id,
-      "merchant_id" => @c4.id,
+      "merchant_id" => @m1.id,
       "status" => "shipped",
       "created_at" => "2004-11-24T01:04:44.000Z",
       "updated_at" => "2004-11-24T01:04:44.000Z"

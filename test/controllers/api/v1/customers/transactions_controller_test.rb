@@ -13,13 +13,13 @@ class Api::V1::Customers::TransactionsControllerTest < ActionController::TestCas
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
       customer = Customer.create(first_name: "John", last_name: "Doe" )
       invoice1 = Invoice.create(customer_id: customer.id,
-                                merchant_id: 1,
+                                merchant_id: @m1.id,
                                 status: "shipped")
       invoice2 = Invoice.create(customer_id: customer.id,
-                                merchant_id: 2,
+                                merchant_id: @m2.id,
                                 status: "shipped")
       invoice3 = Invoice.create(customer_id: customer.id,
-                                merchant_id: 4,
+                                merchant_id: @m3.id,
                                 status: "shipped")
       transaction1 = Transaction.create(invoice_id: invoice1.id,
                                         credit_card_number: "1234123412341234",

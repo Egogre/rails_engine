@@ -6,14 +6,14 @@ require 'rails/test_help'
 require 'database_cleaner'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :all
 
   def setup
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
-    create_sample_data!
+    travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
+      create_sample_data!
+    end
   end
 
   def teardown

@@ -81,11 +81,11 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     get :find_all, invoice_id: @inv12.id, format: :json
 
     assert_response :success
-    assert_equal 2, response_body.count
-    assert_equal "30.00", response_body[0]["unit_price"]
+    assert_equal 3, response_body.count
+    assert_equal "5.30", response_body[0]["unit_price"]
   end
 
-  test "#find_all with no customer matches" do
+  test "#find_all with no matches" do
     InvoiceItem.create(item_id: @i1.id,
                        invoice_id: @inv2.id,
                        quantity: 7,
@@ -100,7 +100,7 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
     assert_response :not_found
   end
 
-  test "#random customer" do
+  test "#random InvoiceItem" do
     InvoiceItem.create(item_id: @i1.id,
                        invoice_id: @inv2.id,
                        quantity: 7,
@@ -119,9 +119,10 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
                        unit_price: 107)
 
     get :random, format: :json
+
     assert_response :success
 
-    assert_includes [7, 12, 1, 3], response_body["quantity"]
+    assert_includes (1..99), response_body["quantity"]
   end
 
 end

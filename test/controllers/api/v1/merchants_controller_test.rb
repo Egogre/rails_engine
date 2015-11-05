@@ -85,22 +85,5 @@ class Api::V1::MerchantsControllerTest < ActionController::TestCase
     assert_includes ["Gandalf", "Bilbo", "Elrond", "Gollum"], response_body["name"]
   end
 
-  test "#most_revenue returns x top revenue merchants" do
-    create_sample_data!
-
-    get :most_revenue, quantity: 3, format: :json
-
-    assert_response :success
-    assert_equal "Gandalf", response_body[0]["name"]
-  end
-
-  test "#most_items returns x top item seller merchants" do
-    create_sample_data!
-
-    get :most_items, quantity: 3, format: :json
-
-    assert_response :success
-    assert_equal "Bilbo", response_body[0]["name"]
-  end
 
 end

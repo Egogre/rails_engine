@@ -77,8 +77,8 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
     get :find_all, customer_id: @c1.id, format: :json
 
     assert_response :success
-    assert_equal 2, response_body.count
-    assert_equal 34, response_body[1]["merchant_id"]
+    assert_equal 4, response_body.count
+    assert_equal @m2.id, response_body[1]["merchant_id"]
   end
 
   test "#find_all with no invoice matches" do
@@ -111,7 +111,8 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
     get :random, format: :json
     assert_response :success
 
-    assert_includes [@c1.id, @c3.id, @c6.id, @c7.id], response_body["customer_id"]
+    assert_includes [@c1.id, @c2.id, @c3.id, @c4.id,@c5.id, @c6.id, @c7.id,
+                     @c8.id], response_body["customer_id"]
   end
 
 end
