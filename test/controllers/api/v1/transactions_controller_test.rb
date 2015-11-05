@@ -66,13 +66,15 @@ class Api::V1::TransactionsControllerTest < ActionController::TestCase
     Transaction.create(invoice_id: 1,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
-                       result: "Success")
+                       result: "Success",
+                       created_at: "2012-03-27T14:54:57.000Z")
     Transaction.create(invoice_id: 1,
                        credit_card_number: "4321432143214321",
                        credit_card_expiration_date: "SOON!",
-                       result: "Success")
+                       result: "Success",
+                       created_at: "2012-03-27T14:54:57.000Z")
 
-    get :find_all, invoice_id: 1, format: :json
+    get :find_all, created_at: "2012-03-27T14:54:57.000Z", format: :json
 
     assert_response :success
     assert_equal 2, response_body.count

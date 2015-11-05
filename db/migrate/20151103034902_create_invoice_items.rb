@@ -4,9 +4,8 @@ class CreateInvoiceItems < ActiveRecord::Migration
       t.references :item, index: true, foreign_key: true
       t.references :invoice, index: true, foreign_key: true
       t.integer :quantity
-      t.string :unit_price
-      t.datetime :created_at
-      t.datetime :updated_at
+      t.integer :unit_price
+      t.timestamps null: false
     end
   end
 end

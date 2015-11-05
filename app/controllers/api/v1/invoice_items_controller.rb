@@ -14,6 +14,7 @@ class Api::V1::InvoiceItemsController < Api::BaseController
   end
 
   def find
+    find_params[:unit_price].gsub!(".", "") if find_params[:unit_price]
     invoice_item = InvoiceItem.find_by(find_params)
     if invoice_item
       respond_with invoice_item
@@ -23,6 +24,7 @@ class Api::V1::InvoiceItemsController < Api::BaseController
   end
 
   def find_all
+    find_params[:unit_price].gsub!(".", "") if find_params[:unit_price]
     invoice_items = InvoiceItem.where(find_params)
     if !invoice_items.empty?
       respond_with invoice_items
