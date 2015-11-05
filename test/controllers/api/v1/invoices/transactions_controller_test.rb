@@ -8,8 +8,8 @@ class Api::V1::Invoices::TransactionsControllerTest < ActionController::TestCase
     transaction2 = nil
     transaction3 = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
-      invoice = Invoice.create(customer_id: 1,
-                               merchant_id: 1,
+      invoice = Invoice.create(customer_id: @c1.id,
+                               merchant_id: @m1.id,
                                status: "shipped")
       transaction1 = Transaction.create(invoice_id: invoice.id,
                                         credit_card_number: "1234123412341234",

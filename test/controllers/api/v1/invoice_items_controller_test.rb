@@ -3,8 +3,8 @@ require 'test_helper'
 class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
 
   def invoice_item
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 1,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv1.id,
                        quantity: 7,
                        unit_price: 3000)
   end
@@ -69,16 +69,16 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
   end
 
   test "#find_all invoice_items" do
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 34,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv12.id,
                        quantity: 7,
                        unit_price: 3000)
-    InvoiceItem.create(item_id: 5,
-                       invoice_id: 34,
+    InvoiceItem.create(item_id: @i5.id,
+                       invoice_id: @inv12.id,
                        quantity: 1,
                        unit_price: 9999)
 
-    get :find_all, invoice_id: 34, format: :json
+    get :find_all, invoice_id: @inv12.id, format: :json
 
     assert_response :success
     assert_equal 2, response_body.count
@@ -86,12 +86,12 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
   end
 
   test "#find_all with no customer matches" do
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 34,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv2.id,
                        quantity: 7,
                        unit_price: 3000)
-    InvoiceItem.create(item_id: 5,
-                       invoice_id: 34,
+    InvoiceItem.create(item_id: @i5.id,
+                       invoice_id: @inv13.id,
                        quantity: 1,
                        unit_price: 9999)
 
@@ -101,20 +101,20 @@ class Api::V1::InvoiceItemsControllerTest < ActionController::TestCase
   end
 
   test "#random customer" do
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 34,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv2.id,
                        quantity: 7,
                        unit_price: 3000)
-    InvoiceItem.create(item_id: 5,
-                       invoice_id: 34,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv2.id,
                        quantity: 1,
                        unit_price: 9999)
-    InvoiceItem.create(item_id: 71,
-                       invoice_id: 47,
+    InvoiceItem.create(item_id: @i9.id,
+                       invoice_id: @inv15.id,
                        quantity: 12,
                        unit_price: 3119)
-    InvoiceItem.create(item_id: 1001,
-                       invoice_id: 991,
+    InvoiceItem.create(item_id: @i4.id,
+                       invoice_id: @inv1.id,
                        quantity: 3,
                        unit_price: 107)
 

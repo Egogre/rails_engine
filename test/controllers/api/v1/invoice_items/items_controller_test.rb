@@ -7,11 +7,11 @@ class Api::V1::InvoiceItems::ItemsControllerTest < ActionController::TestCase
     item = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
       item = Item.create(name: "Test Item",
-                            merchant_id: 1,
+                            merchant_id: @m1.id,
                             description: "Useful",
                             unit_price: 9999)
       invoice_item = InvoiceItem.create(item_id: item.id,
-                                        invoice_id: 4,
+                                        invoice_id: @inv1.id,
                                         quantity:3,
                                         unit_price:9999)
     end
@@ -20,7 +20,7 @@ class Api::V1::InvoiceItems::ItemsControllerTest < ActionController::TestCase
       "name" => "Test Item",
       "description" => "Useful",
       "unit_price" => "99.99",
-      "merchant_id" => 1,
+      "merchant_id" => @m1.id,
       "created_at" => "2004-11-24T01:04:44.000Z",
       "updated_at" => "2004-11-24T01:04:44.000Z"
     }

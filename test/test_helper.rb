@@ -3,10 +3,22 @@ require 'simplecov'
 SimpleCov.start 'rails'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'database_cleaner'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
+
+  def setup
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+    create_sample_data!
+  end
+
+  def teardown
+    DatabaseCleaner.clean
+  end
 
   def response_body
     JSON.parse(response.body)
@@ -22,343 +34,343 @@ class ActiveSupport::TestCase
   end
 
   def create_merchants!
-    Merchant.create(name: "Gandalf")
-    Merchant.create(name: "Bilbo")
-    Merchant.create(name: "Elrond")
-    Merchant.create(name: "Gollum")
+    @m1 = Merchant.create(name: "Gandalf")
+    @m2 = Merchant.create(name: "Bilbo")
+    @m3 = Merchant.create(name: "Elrond")
+    @m4 = Merchant.create(name: "Gollum")
   end
 
   def create_customers!
-    Customer.create(first_name: "Frodo", last_name: "Baggins")
-    Customer.create(first_name: "Legolas", last_name: "Elf")
-    Customer.create(first_name: "Aaragorn", last_name: "King")
-    Customer.create(first_name: "Merryweather", last_name: "Took")
-    Customer.create(first_name: "Pippin", last_name: "Took")
-    Customer.create(first_name: "Samwise", last_name: "Gamgee")
-    Customer.create(first_name: "Gimli", last_name: "Dwarf")
-    Customer.create(first_name: "Boromir", last_name: "Traitor")
+    @c1 = Customer.create(first_name: "Frodo", last_name: "Baggins")
+    @c2 = Customer.create(first_name: "Legolas", last_name: "Elf")
+    @c3 = Customer.create(first_name: "Aaragorn", last_name: "King")
+    @c4 = Customer.create(first_name: "Merryweather", last_name: "Took")
+    @c5 = Customer.create(first_name: "Pippin", last_name: "Took")
+    @c6 = Customer.create(first_name: "Samwise", last_name: "Gamgee")
+    @c7 = Customer.create(first_name: "Gimli", last_name: "Dwarf")
+    @c8 = Customer.create(first_name: "Boromir", last_name: "Traitor")
   end
 
   def create_items!
-    Item.create(name: "White Robes",
-                merchant_id: 1,
+    @i1 = Item.create(name: "White Robes",
+                merchant_id: @m1.id,
                 description: "No longer grey",
                 unit_price: 99)
-    Item.create(name: "Glamdring",
-                merchant_id: 1,
+    @i2 = Item.create(name: "Glamdring",
+                merchant_id: @m1.id,
                 description: "Magic Sword",
                 unit_price: 99999)
-    Item.create(name: "There and Back Again",
-                merchant_id: 2,
+    @i3 = Item.create(name: "There and Back Again",
+                merchant_id: @m2.id,
                 description: "An Unexpected Journey",
                 unit_price: 1099)
-    Item.create(name: "Pipe and Tabac",
-                merchant_id: 2,
+    @i4 = Item.create(name: "Pipe and Tabac",
+                merchant_id: @m2.id,
                 description: "To Rule Them All",
                 unit_price: 530)
-    Item.create(name: "Map",
-                merchant_id: 3,
+    @i5 = Item.create(name: "Map",
+                merchant_id: @m3.id,
                 description: "Find the back door",
                 unit_price: 3000)
-    Item.create(name: "Wisdom",
-                merchant_id: 3,
+    @i6 = Item.create(name: "Wisdom",
+                merchant_id: @m3.id,
                 description: "No one listens anyway",
                 unit_price: 1)
-    Item.create(name: "Arwen",
-                merchant_id: 3,
+    @i7 = Item.create(name: "Arwen",
+                merchant_id: @m3.id,
                 description: "Wilfull Daughter also won't listen",
                 unit_price: 50)
-    Item.create(name: "Frodo's Finger",
-                merchant_id: 4,
+    @i8 = Item.create(name: "Frodo's Finger",
+                merchant_id: @m4.id,
                 description: "A 'handy' souvenier",
                 unit_price: 1000)
-    Item.create(name: "The One Ring",
-                merchant_id: 4,
+    @i9 = Item.create(name: "The One Ring",
+                merchant_id: @m4.id,
                 description: "To Rule Them All",
                 unit_price: 1)
   end
 
   def create_invoices!
-    Invoice.create(customer_id: 1,
-                   merchant_id: 1,
+    @inv1 = Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
-    Invoice.create(customer_id: 2,
-                   merchant_id: 1,
+    @inv2 = Invoice.create(customer_id: @c2.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 3,
-                   merchant_id: 1,
+    @inv3 = Invoice.create(customer_id: @c3.id,
+                   merchant_id: @m3.id,
                    status: "shipped")
-    Invoice.create(customer_id: 4,
-                   merchant_id: 1,
+    @inv4 = Invoice.create(customer_id: @c4.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
-    Invoice.create(customer_id: 5,
-                   merchant_id: 1,
+    @inv5 = Invoice.create(customer_id: @c5.id,
+                   merchant_id: @m3.id,
                    status: "shipped")
-    Invoice.create(customer_id: 6,
-                   merchant_id: 1,
+    @inv6 = Invoice.create(customer_id: @c6.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
-    Invoice.create(customer_id: 7,
-                   merchant_id: 1,
+    @inv7 = Invoice.create(customer_id: @c7.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
-    Invoice.create(customer_id: 8,
-                   merchant_id: 1,
+    @inv8 = Invoice.create(customer_id: @c8.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
-    Invoice.create(customer_id: 1,
-                   merchant_id: 1,
+    @inv9 = Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 2,
-                   merchant_id: 1,
+    @inv10 = Invoice.create(customer_id: @c2.id,
+                   merchant_id: @m3.id,
                    status: "shipped")
-    Invoice.create(customer_id: 3,
-                   merchant_id: 1,
+    @inv11 = Invoice.create(customer_id: @c3.id,
+                   merchant_id: @m3,
                    status: "shipped")
-    Invoice.create(customer_id: 4,
-                   merchant_id: 1,
+    @inv12 = Invoice.create(customer_id: @c4.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 5,
-                   merchant_id: 1,
+    @inv13 = Invoice.create(customer_id: @c5.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
-    Invoice.create(customer_id: 6,
-                   merchant_id: 1,
+    @inv14 = Invoice.create(customer_id: @c6.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
-    Invoice.create(customer_id: 7,
-                   merchant_id: 1,
+    @inv15 = Invoice.create(customer_id: @c7.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
-    Invoice.create(customer_id: 8,
-                   merchant_id: 1,
+    @inv16 = Invoice.create(customer_id: @c8.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 2,
-                   merchant_id: 1,
+    @inv17 = Invoice.create(customer_id: @c2.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 4,
-                   merchant_id: 1,
+    @inv18 = Invoice.create(customer_id: @c4.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 7,
-                   merchant_id: 1,
+    @inv19 = Invoice.create(customer_id: @c7.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
-    Invoice.create(customer_id: 7,
-                   merchant_id: 1,
+    @inv20 = Invoice.create(customer_id: @c7.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
   end
 
   def create_invoice_items!
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 1,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv1.id,
                        quantity: 1,
                        unit_price: 99)
-    InvoiceItem.create(item_id: 2,
-                       invoice_id: 1,
+    InvoiceItem.create(item_id: @i2.id,
+                       invoice_id: @inv1.id,
                        quantity: 5,
                        unit_price: 99999)
-    InvoiceItem.create(item_id: 3,
-                       invoice_id: 2,
+    InvoiceItem.create(item_id: @i3.id,
+                       invoice_id: @inv2.id,
                        quantity: 21,
                        unit_price: 1099)
-    InvoiceItem.create(item_id: 4,
-                       invoice_id: 2,
+    InvoiceItem.create(item_id: @i4.id,
+                       invoice_id: @inv2.id,
                        quantity: 1,
                        unit_price: 530)
-    InvoiceItem.create(item_id: 5,
-                       invoice_id: 3,
+    InvoiceItem.create(item_id: @i5.id,
+                       invoice_id: @inv3.id,
                        quantity: 7,
                        unit_price: 3000)
-    InvoiceItem.create(item_id: 6,
-                       invoice_id: 3,
+    InvoiceItem.create(item_id: @i6.id,
+                       invoice_id: @inv3.id,
                        quantity: 4,
                        unit_price: 1)
-    InvoiceItem.create(item_id: 8,
-                       invoice_id: 4,
+    InvoiceItem.create(item_id: @i8.id,
+                       invoice_id: @inv4.id,
                        quantity: 9,
                        unit_price: 1)
-    InvoiceItem.create(item_id: 5,
-                       invoice_id: 5,
+    InvoiceItem.create(item_id: @i5.id,
+                       invoice_id: @inv5.id,
                        quantity: 11,
                        unit_price: 3000)
-    InvoiceItem.create(item_id: 6,
-                       invoice_id: 5,
+    InvoiceItem.create(item_id: @i6.id,
+                       invoice_id: @inv5.id,
                        quantity: 1,
                        unit_price: 1)
-    InvoiceItem.create(item_id: 7,
-                       invoice_id: 5,
+    InvoiceItem.create(item_id: @i7.id,
+                       invoice_id: @inv5.id,
                        quantity: 9,
                        unit_price: 50)
-    InvoiceItem.create(item_id: 8,
-                       invoice_id: 6,
+    InvoiceItem.create(item_id: @i8.id,
+                       invoice_id: @inv6.id,
                        quantity: 4,
                        unit_price: 1)
-    InvoiceItem.create(item_id: 9,
-                       invoice_id: 6,
+    InvoiceItem.create(item_id: @i9.id,
+                       invoice_id: @inv6.id,
                        quantity: 2,
                        unit_price: 1000)
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 7,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv7.id,
                        quantity: 3,
                        unit_price: 99)
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 8,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv8.id,
                        quantity: 1,
                        unit_price: 99)
-    InvoiceItem.create(item_id: 4,
-                       invoice_id: 9,
+    InvoiceItem.create(item_id: @i4.id,
+                       invoice_id: @inv9.id,
                        quantity: 5,
                        unit_price: 530)
-    InvoiceItem.create(item_id: 6,
-                       invoice_id: 10,
+    InvoiceItem.create(item_id: @i6.id,
+                       invoice_id: @inv10.id,
                        quantity: 10,
                        unit_price: 1)
-    InvoiceItem.create(item_id: 7,
-                       invoice_id: 10,
+    InvoiceItem.create(item_id: @i7.id,
+                       invoice_id: @inv10.id,
                        quantity: 1,
                        unit_price: 50)
-    InvoiceItem.create(item_id: 3,
-                       invoice_id: 11,
+    InvoiceItem.create(item_id: @i3.id,
+                       invoice_id: @inv11.id,
                        quantity: 1,
                        unit_price: 1099)
-    InvoiceItem.create(item_id: 4,
-                       invoice_id: 12,
+    InvoiceItem.create(item_id: @i4.id,
+                       invoice_id: @inv12.id,
                        quantity: 13,
                        unit_price: 530)
-    InvoiceItem.create(item_id: 1,
-                       invoice_id: 13,
+    InvoiceItem.create(item_id: @i1.id,
+                       invoice_id: @inv13.id,
                        quantity: 1,
                        unit_price: 99)
-    InvoiceItem.create(item_id: 2,
-                       invoice_id: 13,
+    InvoiceItem.create(item_id: @i2.id,
+                       invoice_id: @inv13.id,
                        quantity: 9,
                        unit_price: 99999)
-    InvoiceItem.create(item_id: 9,
-                       invoice_id: 14,
+    InvoiceItem.create(item_id: @i9.id,
+                       invoice_id: @inv14.id,
                        quantity: 20,
                        unit_price: 1000)
-    InvoiceItem.create(item_id: 8,
-                       invoice_id: 15,
+    InvoiceItem.create(item_id: @i8.id,
+                       invoice_id: @inv15.id,
                        quantity: 1,
                        unit_price: 1)
-    InvoiceItem.create(item_id: 3,
-                       invoice_id: 16,
+    InvoiceItem.create(item_id: @i3.id,
+                       invoice_id: @inv16.id,
                        quantity: 7,
                        unit_price: 1099)
-    InvoiceItem.create(item_id: 3,
-                       invoice_id: 17,
+    InvoiceItem.create(item_id: @i3.id,
+                       invoice_id: @inv17.id,
                        quantity: 1,
                        unit_price: 1099)
-    InvoiceItem.create(item_id: 4,
-                       invoice_id: 18,
+    InvoiceItem.create(item_id: @i4.id,
+                       invoice_id: @inv18.id,
                        quantity: 1,
                        unit_price: 530)
-    InvoiceItem.create(item_id: 3,
-                       invoice_id: 19,
+    InvoiceItem.create(item_id: @i3.id,
+                       invoice_id: @inv19.id,
                        quantity: 99,
                        unit_price: 1099)
-    InvoiceItem.create(item_id: 4,
-                       invoice_id: 19,
+    InvoiceItem.create(item_id: @i4.id,
+                       invoice_id: @inv19.id,
                        quantity: 31,
                        unit_price: 530)
-    InvoiceItem.create(item_id: 8,
-                       invoice_id: 20,
+    InvoiceItem.create(item_id: @i8.id,
+                       invoice_id: @inv20.id,
                        quantity: 1,
                        unit_price: 1)
 
   end
 
   def create_transactions!
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv1.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 2,
+    Transaction.create(invoice_id: @inv2.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 2,
+    Transaction.create(invoice_id: @inv2.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 3,
+    Transaction.create(invoice_id: @inv3.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 4,
+    Transaction.create(invoice_id: @inv4.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 5,
+    Transaction.create(invoice_id: @inv5.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 5,
+    Transaction.create(invoice_id: @inv5.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 5,
+    Transaction.create(invoice_id: @inv5.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 6,
+    Transaction.create(invoice_id: @inv6.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 7,
+    Transaction.create(invoice_id: @inv7.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 8,
+    Transaction.create(invoice_id: @inv8.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 9,
+    Transaction.create(invoice_id: @inv9.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 10,
+    Transaction.create(invoice_id: @inv10.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 11,
+    Transaction.create(invoice_id: @inv11.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 12,
+    Transaction.create(invoice_id: @inv12.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 13,
+    Transaction.create(invoice_id: @inv13.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 13,
+    Transaction.create(invoice_id: @inv13.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 14,
+    Transaction.create(invoice_id: @inv14.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 15,
+    Transaction.create(invoice_id: @inv15.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 16,
+    Transaction.create(invoice_id: @inv16.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 17,
+    Transaction.create(invoice_id: @inv17.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 18,
+    Transaction.create(invoice_id: @inv18.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 19,
+    Transaction.create(invoice_id: @inv19.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")
-    Transaction.create(invoice_id: 20,
+    Transaction.create(invoice_id: @inv20.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "failed")
-    Transaction.create(invoice_id: 20,
+    Transaction.create(invoice_id: @inv20.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "success")

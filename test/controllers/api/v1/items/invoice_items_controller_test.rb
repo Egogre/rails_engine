@@ -9,19 +9,19 @@ class Api::V1::Items::InvoiceItemsControllerTest < ActionController::TestCase
     invoice_item3 = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
       item = Item.create(name: "Test Item",
-                         merchant_id: 1,
+                         merchant_id: @m1.id,
                          description: "Useful",
                          unit_price: 9999)
       invoice_item1 = InvoiceItem.create(item_id: item.id,
-                                         invoice_id: 2,
+                                         invoice_id: @inv2.id,
                                          quantity: 7,
                                          unit_price: 9999)
       invoice_item2 = InvoiceItem.create(item_id: item.id,
-                                         invoice_id: 5,
+                                         invoice_id: @inv5.id,
                                          quantity: 2,
                                          unit_price: 7777)
       invoice_item3 = InvoiceItem.create(item_id: item.id,
-                                         invoice_id: 54,
+                                         invoice_id: @inv19.id,
                                          quantity: 13,
                                          unit_price: 1234)
     end
@@ -29,7 +29,7 @@ class Api::V1::Items::InvoiceItemsControllerTest < ActionController::TestCase
       {
         "id" => invoice_item1.id,
         "item_id" => item.id,
-        "invoice_id" => 2,
+        "invoice_id" => @inv2.id,
         "quantity" => 7,
         "unit_price" => "99.99",
         "created_at" => "2004-11-24T01:04:44.000Z",
@@ -38,7 +38,7 @@ class Api::V1::Items::InvoiceItemsControllerTest < ActionController::TestCase
       {
         "id" => invoice_item2.id,
         "item_id" => item.id,
-        "invoice_id" => 5,
+        "invoice_id" => @inv5.id,
         "quantity" => 2,
         "unit_price" => "77.77",
         "created_at" => "2004-11-24T01:04:44.000Z",
@@ -47,7 +47,7 @@ class Api::V1::Items::InvoiceItemsControllerTest < ActionController::TestCase
       {
         "id" => invoice_item3.id,
         "item_id" => item.id,
-        "invoice_id" => 54,
+        "invoice_id" => @inv19.id,
         "quantity" => 13,
         "unit_price" => "12.34",
         "created_at" => "2004-11-24T01:04:44.000Z",

@@ -11,19 +11,19 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
     item2 = nil
     item3 = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
-      invoice = Invoice.create(customer_id: 1,
-                               merchant_id: 1,
+      invoice = Invoice.create(customer_id: @c1.id,
+                               merchant_id: @m1.id,
                                status: "shipped")
       item1 = Item.create(name: "Test Item",
-                          merchant_id: 1,
+                          merchant_id: @m1.id,
                           description: "Useful",
                           unit_price: 9999)
       item2 = Item.create(name: "Another Test Item",
-                          merchant_id: 1,
+                          merchant_id: @m1.id,
                           description: "More Useful",
                           unit_price: 7777)
       item3 = Item.create(name: "Last Test Item",
-                          merchant_id: 4,
+                          merchant_id: @m4.id,
                           description: "Most Useful",
                           unit_price: 1234)
       invoice_item1 = InvoiceItem.create(item_id: item1.id,
@@ -45,7 +45,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
         "name" => "Test Item",
         "description" => "Useful",
         "unit_price" => "99.99",
-        "merchant_id" => 1,
+        "merchant_id" => @m1.id,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       },
@@ -54,7 +54,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
         "name" => "Another Test Item",
         "description" => "More Useful",
         "unit_price" => "77.77",
-        "merchant_id" => 1,
+        "merchant_id" => @m1.id,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       },
@@ -63,7 +63,7 @@ class Api::V1::Invoices::ItemsControllerTest < ActionController::TestCase
         "name" => "Last Test Item",
         "description" => "Most Useful",
         "unit_price" => "12.34",
-        "merchant_id" => 4,
+        "merchant_id" => @m4.id,
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
       }

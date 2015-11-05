@@ -9,7 +9,7 @@ class Api::V1::Invoices::CustomersControllerTest < ActionController::TestCase
       customer = Customer.create(first_name: "John",
                                  last_name: "Doe")
       invoice = Invoice.create(customer_id: customer.id,
-                               merchant_id: 1,
+                               merchant_id: @m1.id,
                                status: "shipped")
     end
     expected_customer = {

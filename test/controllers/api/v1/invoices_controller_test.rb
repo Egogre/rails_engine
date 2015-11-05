@@ -3,8 +3,8 @@ require 'test_helper'
 class Api::V1::InvoicesControllerTest < ActionController::TestCase
 
   def invoice
-    Invoice.create(customer_id: 1,
-                   merchant_id: 1,
+    Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
   end
 
@@ -67,14 +67,14 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
   end
 
   test "#find_all invoices" do
-    Invoice.create(customer_id: 1,
-                   merchant_id: 7,
+    Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
-    Invoice.create(customer_id: 1,
-                   merchant_id: 34,
+    Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m2.id,
                    status: "shipped")
 
-    get :find_all, customer_id: 1, format: :json
+    get :find_all, customer_id: @c1.id, format: :json
 
     assert_response :success
     assert_equal 2, response_body.count
@@ -82,11 +82,11 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
   end
 
   test "#find_all with no invoice matches" do
-    Invoice.create(customer_id: 1,
-                   merchant_id: 7,
+    Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m3.id,
                    status: "shipped")
-    Invoice.create(customer_id: 1,
-                   merchant_id: 34,
+    Invoice.create(customer_id: @i1.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
 
     get :find_all, customer_id: 11011001, format: :json
@@ -95,23 +95,23 @@ class Api::V1::InvoicesControllerTest < ActionController::TestCase
   end
 
   test "#random invoice" do
-    Invoice.create(customer_id: 3,
-                   merchant_id: 31,
+    Invoice.create(customer_id: @c3.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
-    Invoice.create(customer_id: 99,
-                   merchant_id: 34,
+    Invoice.create(customer_id: @c7.id,
+                   merchant_id: @m3.id,
                    status: "shipped")
-    Invoice.create(customer_id: 1,
-                   merchant_id: 7,
+    Invoice.create(customer_id: @c6.id,
+                   merchant_id: @m1.id,
                    status: "shipped")
-    Invoice.create(customer_id: 1,
-                   merchant_id: 34,
+    Invoice.create(customer_id: @c1.id,
+                   merchant_id: @m4.id,
                    status: "shipped")
 
     get :random, format: :json
     assert_response :success
 
-    assert_includes [1, 3, 99], response_body["customer_id"]
+    assert_includes [@c1.id, @c3.id, @c6.id, @c7.id], response_body["customer_id"]
   end
 
 end

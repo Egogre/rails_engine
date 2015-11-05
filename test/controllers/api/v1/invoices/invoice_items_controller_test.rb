@@ -11,19 +11,19 @@ class Api::V1::Invoices::InvoiceItemsControllerTest < ActionController::TestCase
     item2 = nil
     item3 = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
-      invoice = Invoice.create(customer_id: 1,
-                               merchant_id: 1,
+      invoice = Invoice.create(customer_id: @c1.id,
+                               merchant_id: @m1.id,
                                status: "shipped")
       item1 = Item.create(name: "Test Item",
-                          merchant_id: 1,
+                          merchant_id: @m1.id,
                           description: "Useful",
                           unit_price: 9999)
       item2 = Item.create(name: "Another Test Item",
-                          merchant_id: 1,
+                          merchant_id: @m1.id,
                           description: "More Useful",
                           unit_price: 7777)
       item3 = Item.create(name: "Last Test Item",
-                          merchant_id: 4,
+                          merchant_id: @m4.id,
                           description: "Most Useful",
                           unit_price: 1234)
       invoice_item1 = InvoiceItem.create(item_id: item1.id,

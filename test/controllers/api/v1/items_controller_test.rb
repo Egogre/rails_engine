@@ -2,11 +2,15 @@ require 'test_helper'
 
 class Api::V1::ItemsControllerTest < ActionController::TestCase
 
+  def setup
+    create_sample_data!
+  end
+
   def item
     Item.create(name: "Test Item",
                 description: "Useful",
                 unit_price: 9999,
-                merchant_id: 1)
+                merchant_id: @m1.id)
   end
 
   test "item index json api" do
@@ -72,11 +76,11 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     Item.create(name: "Test Item",
                 description: "Useful",
                 unit_price: 9999,
-                merchant_id: 1)
+                merchant_id: @m1.id)
     Item.create(name: "Other Test Item",
                 description: "Very Useful",
                 unit_price: 9999,
-                merchant_id: 1)
+                merchant_id: @m1.id)
 
     get :find_all, unit_price: "9999", format: :json
 
@@ -89,11 +93,11 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     Item.create(name: "Test Item",
                 description: "Useful",
                 unit_price: 9999,
-                merchant_id: 1)
+                merchant_id: @m1.id)
     Item.create(name: "Other Test Item",
                 description: "Very Useful",
                 unit_price: 9999,
-                merchant_id: 1)
+                merchant_id: @m1.id)
 
     get :find_all, name: "BILLYJOEBOBRAYGUN", format: :json
 
@@ -104,19 +108,19 @@ class Api::V1::ItemsControllerTest < ActionController::TestCase
     Item.create(name: "Test Item",
                 description: "Useful",
                 unit_price: 1234,
-                merchant_id: 1)
+                merchant_id: @m1.id)
     Item.create(name: "Other Test Item",
                 description: "Very Useful",
                 unit_price: 4321,
-                merchant_id: 432)
+                merchant_id: @m2.id)
     Item.create(name: "Another Test Item",
                 description: "Very Very Useful",
                 unit_price: 3456,
-                merchant_id: 23)
+                merchant_id: @m3.id)
     Item.create(name: "And Yet Another Test Item",
                 description: "Ultra Useful",
                 unit_price: 6543,
-                merchant_id: 156)
+                merchant_id: @m4.id)
 
     get :random, format: :json
     assert_response :success

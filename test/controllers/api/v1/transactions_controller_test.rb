@@ -3,7 +3,7 @@ require 'test_helper'
 class Api::V1::TransactionsControllerTest < ActionController::TestCase
 
   def transaction
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv1.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "Success")
@@ -63,12 +63,12 @@ class Api::V1::TransactionsControllerTest < ActionController::TestCase
   end
 
   test "#find_all transactions" do
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv11.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "Success",
                        created_at: "2012-03-27T14:54:57.000Z")
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv1.id,
                        credit_card_number: "4321432143214321",
                        credit_card_expiration_date: "SOON!",
                        result: "Success",
@@ -82,11 +82,11 @@ class Api::V1::TransactionsControllerTest < ActionController::TestCase
   end
 
   test "#find_all with no transaction matches" do
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv1.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "Success")
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv1.id,
                        credit_card_number: "4321432143214321",
                        credit_card_expiration_date: "SOON!",
                        result: "Success")
@@ -97,19 +97,19 @@ class Api::V1::TransactionsControllerTest < ActionController::TestCase
   end
 
   test "#random transaction" do
-    Transaction.create(invoice_id: 1,
+    Transaction.create(invoice_id: @inv1.id,
                        credit_card_number: "1234123412341234",
                        credit_card_expiration_date: "NEVER!",
                        result: "Success")
-    Transaction.create(invoice_id: 2,
+    Transaction.create(invoice_id: @inv2.id,
                        credit_card_number: "4321432143214321",
                        credit_card_expiration_date: "SOON!",
                        result: "Success")
-    Transaction.create(invoice_id: 4,
+    Transaction.create(invoice_id: @inv4.id,
                        credit_card_number: "3456345634563456",
                        credit_card_expiration_date: "NOW!",
                        result: "Success")
-    Transaction.create(invoice_id: 5,
+    Transaction.create(invoice_id: @inv5.id,
                        credit_card_number: "6543654365436543",
                        credit_card_expiration_date: "YESTERDAY!",
                        result: "Success")

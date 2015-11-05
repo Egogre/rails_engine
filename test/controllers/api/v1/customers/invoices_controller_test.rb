@@ -10,20 +10,20 @@ class Api::V1::Customers::InvoicesControllerTest < ActionController::TestCase
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
       customer = Customer.create(first_name: "John", last_name: "Doe" )
       invoice1 = Invoice.create(customer_id: customer.id,
-                                merchant_id: 1,
+                                merchant_id: @m1.id,
                                 status: "shipped")
       invoice2 = Invoice.create(customer_id: customer.id,
-                                merchant_id: 2,
+                                merchant_id: @m2.id,
                                 status: "shipped")
       invoice3 = Invoice.create(customer_id: customer.id,
-                                merchant_id: 4,
+                                merchant_id: @m3.id,
                                 status: "shipped")
     end
     all_invoices = [
       {
         "id" => invoice1.id,
         "customer_id" => customer.id,
-        "merchant_id" => 1,
+        "merchant_id" => @m1.id,
         "status" => "shipped",
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
@@ -31,7 +31,7 @@ class Api::V1::Customers::InvoicesControllerTest < ActionController::TestCase
       {
         "id" => invoice2.id,
         "customer_id" => customer.id,
-        "merchant_id" => 2,
+        "merchant_id" => @m2.id,
         "status" => "shipped",
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"
@@ -39,7 +39,7 @@ class Api::V1::Customers::InvoicesControllerTest < ActionController::TestCase
       {
         "id" => invoice3.id,
         "customer_id" => customer.id,
-        "merchant_id" => 4,
+        "merchant_id" => @m3.id,
         "status" => "shipped",
         "created_at" => "2004-11-24T01:04:44.000Z",
         "updated_at" => "2004-11-24T01:04:44.000Z"

@@ -6,18 +6,18 @@ class Api::V1::InvoiceItems::InvoicesControllerTest < ActionController::TestCase
     invoice_item = nil
     invoice = nil
     travel_to Time.utc(2004, 11, 24, 01, 04, 44) do
-      invoice = Invoice.create(customer_id: 21,
-                               merchant_id: 1,
+      invoice = Invoice.create(customer_id: @c1.id,
+                               merchant_id: @m1.id,
                                status: "shipped")
-      invoice_item = InvoiceItem.create(item_id: 1,
+      invoice_item = InvoiceItem.create(item_id: @i1.id,
                                         invoice_id: invoice.id,
                                         quantity:3,
                                         unit_price:3333)
     end
     expected_invoice = {
       "id" => invoice.id,
-      "customer_id" => 21,
-      "merchant_id" => 1,
+      "customer_id" => @c1.id,
+      "merchant_id" => @m1.id,
       "status" => "shipped",
       "created_at" => "2004-11-24T01:04:44.000Z",
       "updated_at" => "2004-11-24T01:04:44.000Z"
