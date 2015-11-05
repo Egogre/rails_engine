@@ -40,7 +40,7 @@ class Api::V1::ItemsController < Api::BaseController
   private
 
   def find_params
-    params.permit(:id, :name, :description, :merchant_id, :unit_price)
+    params.permit(:id, :name, :description, :merchant_id, :unit_price, :created_at, :updated_at)
   end
 
 end

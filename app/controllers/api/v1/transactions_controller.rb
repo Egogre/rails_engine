@@ -42,7 +42,9 @@ class Api::V1::TransactionsController < Api::BaseController
                   :credit_card_number,
                   :invoice_id,
                   :credit_card_expiration_date,
-                  :result)
+                  :result,
+                  :created_at,
+                  :updated_at)
   end
 
 end
